@@ -1,0 +1,20 @@
+San Agustin;250;100000,00
+Isidro Ayora;100;500000,00
+Mogrovejo;175;75000,00
+San Jose;100;25000,00
+San Agustin;250;100000,00
+Isidro Ayora;100;500000,00
+Mogrovejo;175;75000,00
+San Jose;100;25000,00
+San Agustin;250;100000,00
+Isidro Ayora;100;500000,00
+Mogrovejo;175;75000,00
+San Jose;100;25000,00
+San Agustin;250;100000,00
+Isidro Ayora;100;500000,00
+Mogrovejo;175;75000,00
+San Jose;100;25000,00
+San Agustin;250;100000,00
+Isidro Ayora;100;500000,00
+Mogrovejo;175;75000,00
+San Jose;100;25000,00
