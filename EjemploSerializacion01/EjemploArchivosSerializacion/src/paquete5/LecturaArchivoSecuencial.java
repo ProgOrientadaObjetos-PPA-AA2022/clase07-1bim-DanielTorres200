@@ -3,26 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package paquete3;
+package paquete5;
 
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 import java.util.ArrayList;
-import paquete1.Calificacion;
+import paquete5.Hospital;
 
 /**
  *
- * @author reroes
+ * @author spart
  */
 public class LecturaArchivoSecuencial {
-
+    
     private ObjectInputStream entrada;
-    private ArrayList<Calificacion> calificaciones;
+    private ArrayList<Hospital> hospital;
     private String nombreArchivo;
+    private String identificador;
+    private Hospital DoctorBuscado;
 
     public LecturaArchivoSecuencial(String n) {
         nombreArchivo = n;
@@ -44,16 +45,16 @@ public class LecturaArchivoSecuencial {
         nombreArchivo = n;
     }
 
-    public void establecerListaCalificaciones() {
+    public void establecerListaHospital() {
         // 
-        calificaciones = new ArrayList<>();
+        hospital = new ArrayList<>();
         File f = new File(obtenerNombreArchivo());
         if (f.exists()) {
 
             while (true) {
                 try {
-                    Calificacion registro = (Calificacion) entrada.readObject();
-                    calificaciones.add(registro);
+                    Hospital registro = (Hospital) entrada.readObject();
+                    hospital.add(registro);
                 } catch (EOFException endOfFileException) {
                     return; // se llegó al fin del archivo
 
@@ -67,26 +68,70 @@ public class LecturaArchivoSecuencial {
                 }
             }
         }
+
+    }
+    
+    public void establecerIdentificador(String n) {
+        identificador = n;
+    }
+    public void establecerDoctorBuscado() {
+        // 
+        
+        File f = new File(obtenerNombreArchivo());
+        if (f.exists()) {
+
+            while (true) {
+                try {
+                    Hospital registro = (Hospital) entrada.readObject();
+                    
+                    if(registro.obtenerIdDoctor().equals(identificador)){
+                        DoctorBuscado = registro;
+                        break;
+                    }
+                    
+                } catch (EOFException endOfFileException) {
+                    return; // se llegó al fin del archivo
+                    // se puede usar el break;
+                    // System.err.println("Fin de archivo: " + endOfFileException);
+
+                } catch (IOException ex) {
+                    System.err.println("Error al leer el archivo: " + ex);
+                } catch (ClassNotFoundException ex) {
+                    System.err.println("No se pudo crear el objeto: " + ex);
+                } catch (Exception ex) {
+                    System.err.println("No hay datos en el archivo: " + ex);
+
+                }
+            }
+        }
     }
 
-    public ArrayList<Calificacion> obtenerListaCalificaciones() {
-        return calificaciones;
+    public ArrayList<Hospital> obtenerListaHospitales() {
+        return hospital;
     }
 
     public String obtenerNombreArchivo() {
         return nombreArchivo;
     }
+    
+    public String obtenerIdentificador() {
+        return identificador;
+    }
+    
+    public Hospital obtenerDoctorBuscado() {
+        return DoctorBuscado;
+    }
 
     @Override
     public String toString() {
-        String cadena = "Lista de Calificaciones\n";
-        for (int i = 0; i < obtenerListaCalificaciones().size(); i++) {
-            Calificacion p = obtenerListaCalificaciones().get(i);
-            cadena = String.format("%s%s-%.2f-(%s-%s)\n", cadena,
-                    p.obtenerNombreMateria(),
-                    p.obtenerNota(),
-                    p.obtenerProfesor().obtenerNombre(),
-                    p.obtenerProfesor().obtenerTipo());
+        String cadena = "Hospitales\n";
+        for (int i = 0; i < obtenerListaHospitales().size(); i++) {
+            Hospital h = obtenerListaHospitales().get(i);
+            cadena = String.format("%s %s %d %.2f %S\n", cadena,
+                    h.obtenerNombre(),
+                    h.obtenerNumeroCamas(),
+                    h.obtenerPresupuesto(),
+                    h.obtenerIdDoctor());
         }
 
         return cadena;
